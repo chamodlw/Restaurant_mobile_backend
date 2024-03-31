@@ -14,7 +14,7 @@ const addItem = (req, res, next) => {
     const item = new Item({
         id: req.body.id,
         name: req.body.name,
-        price: req.body.price
+        //price: req.body.price
     });
     item.save()
         .then(response => {
@@ -26,8 +26,8 @@ const addItem = (req, res, next) => {
 };
 
 const updateItem = (req, res, next) => {
-    const { id, name, price } = req.body;
-    Item.updateOne({ id: id }, { $set: { name: name, price: price } })
+    const { id, name, /*price*/ } = req.body;
+    Item.updateOne({ id: id }, { $set: { name: name, /*price: price*/ } })
         .then(response => {
             res.json({ response });
         })
