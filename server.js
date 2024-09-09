@@ -5,6 +5,7 @@ const port = 3200;
 const host ='localhost';
 const mongoose = require('mongoose');
 const router = require('./routes/route1');
+const router_bill = require('./routes/router_bill');
 
 app.use(cors());
 app.use(express.json());
@@ -28,3 +29,4 @@ const server = app.listen(port, host,() =>{
 });
 
 app.use('/api',router);
+app.use('/api',router_bill);

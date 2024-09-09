@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const controller = require('./controllers/controller1');
+const controller_bill = require('./controllers/controller_bill');
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -27,6 +28,30 @@ app.post('/updateitem', (req, res) => {
 
 app.post('/deleteitem', (req, res) => {
     controller.deleteItem(req.body, callback => {
+        res.send(callback);
+    });
+});
+
+app.get('/bills', (req, res) => {
+    controller_bill.getBills(bills => {
+        res.send(bills);
+    });
+});
+
+app.post('/addbill', (req, res) => {
+    controller_bill.addBill(req.body, callback => {
+        res.send(callback);
+    });
+});
+
+app.post('/updatebill', (req, res) => {
+    controller_bill.updateBill(req.body, callback => {
+        res.send(callback);
+    });
+});
+
+app.post('/deletebill', (req, res) => {
+    controller_bill.deleteBill(req.body, callback => {
         res.send(callback);
     });
 });
