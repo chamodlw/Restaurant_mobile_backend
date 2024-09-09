@@ -14,7 +14,8 @@ const addItem = (req, res, next) => {
     const item = new Item({
         id: req.body.id,
         name: req.body.name,
-        //price: req.body.price
+        price: req.body.price,
+        category: req.body.category
     });
     item.save()
         .then(response => {

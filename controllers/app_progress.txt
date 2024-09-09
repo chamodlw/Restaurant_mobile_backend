@@ -1,0 +1,17 @@
+back
+itm manage
+        id: Number,
+        img : text(link)
+        name: String,
+        price: Number,
+        category: String
+    add items
+    get items
+    update items
+    delete items
+bill manage
+    create bill
+        bill id : number
+        itm img : text(link)
+        itm ids : number
+        itm names : string
