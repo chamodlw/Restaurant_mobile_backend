@@ -15,3 +15,4 @@ bill manage
         itm img : text(link)
         itm ids : number
         itm names : string
+        total: number

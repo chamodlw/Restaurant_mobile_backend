@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 
 const billSchema = new Schema({
     id: Number,
-    total: Number
+    items: [{
+        id: Number,
+        name: String
+    }],
+    total: Number,
 });
 
 const Bill = mongoose.model('Bill', billSchema);

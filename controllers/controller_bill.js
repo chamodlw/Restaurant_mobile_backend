@@ -13,6 +13,10 @@ const getBills = (req, res, next) => {
 const addBill = (req, res, next) => {
     const newBill = new Bill({
         id: req.body.id,
+        items: req.body.items.map(item => ({
+            id: item.id,
+            name: item.name
+        })),
         total: req.body.total
     });
     newBill.save()
