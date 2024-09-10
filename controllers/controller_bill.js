@@ -11,11 +11,11 @@ const getBills = (req, res, next) => {
 };
 
 const addBill = (req, res, next) => {
-    const Bill = new Bill({
+    const newBill = new Bill({
         id: req.body.id,
         total: req.body.total
     });
-    Bill.save()
+    newBill.save()
         .then(response => {
             res.json({ response });
         })
@@ -25,7 +25,7 @@ const addBill = (req, res, next) => {
 };
 
 const updateBill = (req, res, next) => {
-    const { id, total} = req.body;
+    const { id, total } = req.body;
     Bill.updateOne({ id: id }, { $set: { total: total } })
         .then(response => {
             res.json({ response });
