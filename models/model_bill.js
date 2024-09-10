@@ -6,7 +6,8 @@ const billSchema = new Schema({
     id: Number,
     items: [{
         id: Number,
-        name: String
+        name: String,
+        price: Number,
     }],
     total: Number,
 });

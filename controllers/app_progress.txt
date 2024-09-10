@@ -16,3 +16,6 @@ bill manage
         itm ids : number
         itm names : string
         total: number
+    get bills
+    update bills
+    delete bills

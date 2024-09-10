@@ -15,7 +15,8 @@ const addBill = (req, res, next) => {
         id: req.body.id,
         items: req.body.items.map(item => ({
             id: item.id,
-            name: item.name
+            name: item.name,
+            price: item.price
         })),
         total: req.body.total
     });
@@ -29,8 +30,8 @@ const addBill = (req, res, next) => {
 };
 
 const updateBill = (req, res, next) => {
-    const { id, total } = req.body;
-    Bill.updateOne({ id: id }, { $set: { total: total } })
+    const { id, items, total } = req.body;
+    Bill.updateOne({ id: id }, { $set: { items: items, total: total } })
         .then(response => {
             res.json({ response });
         })
@@ -38,6 +39,7 @@ const updateBill = (req, res, next) => {
             res.json({ error });
         });
 };
+
 
 const deleteBill = (req, res, next) => {
     const id = req.body.id;
