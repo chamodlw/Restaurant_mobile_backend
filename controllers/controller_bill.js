@@ -10,6 +10,69 @@ const getBills = (req, res, next) => {
         });
 };
 
+const getBillUnderMaxId = (req, res, next) => {
+    Bill.findOne().sort({ id: -1 }).limit(1)
+        .then(response => {
+            if (response) {
+                res.json({ response });
+            } else {
+                res.json({ message: 'No bills found.' });
+            }
+        })
+        .catch(error => {
+            res.json({ error });
+        });
+};
+
+const getBillsByMonth = (req, res, next) => {
+    const { year, month } = req.params; // Get year and month from the request parameters
+
+    // Create a date range for the month of the given year
+    const startDate = new Date(`${year}-${month}-01`);
+    const endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + 1); // Move to the first day of the next month
+
+    // Find bills where the date_time falls within the specified month
+    Bill.find({
+        'date_time': {
+            $gte: startDate,
+            $lt: endDate
+        }
+    })
+        .then(response => {
+            res.json({ response });
+        })
+        .catch(error => {
+            res.json({ message: error });
+        });
+};
+
+const getBillsByDate = (req, res, next) => {
+    let { year, month, day } = req.params;
+
+    // Pad month and day with leading zeros if necessary
+    month = month.padStart(2, '0');
+    day = day.padStart(2, '0');
+
+    // Create the start and end of the specific date
+    const startDate = new Date(`${year}-${month}-${day}T00:00:00.000Z`);
+    const endDate = new Date(`${year}-${month}-${day}T23:59:59.999Z`);
+
+    // Find bills where the date_time falls within the specified day
+    Bill.find({
+        'date_time': {
+            $gte: startDate,
+            $lt: endDate
+        }
+    })
+        .then(response => {
+            res.json({ response });
+        })
+        .catch(error => {
+            res.json({ message: error });
+        });
+};
+
 const addBill = (req, res, next) => {
     const newBill = new Bill({
         id: req.body.id,
@@ -53,6 +116,9 @@ const deleteBill = (req, res, next) => {
 };
 
 exports.getBills = getBills;
+exports.getBillUnderMaxId = getBillUnderMaxId;
+exports.getBillsByMonth = getBillsByMonth;
+exports.getBillsByDate = getBillsByDate;
 exports.addBill = addBill;
 exports.updateBill = updateBill;
 exports.deleteBill = deleteBill;

@@ -38,6 +38,24 @@ app.get('/bills', (req, res) => {
     });
 });
 
+app.get('/billundermaxid', (req, res) => {
+    controller_bill.getBillUnderMaxId(bill => {
+        res.send(bill);
+    });
+});
+
+app.get('/bills/:year/:month', (req, res) => {
+    controller_bill.getBillsByMonth(req.params, bills => {
+        res.send(bills);
+    });
+});
+
+app.get('/bills/:year/:month/:day', (req, res) => {
+    controller_bill.getBillsByDate(req.params, bills => {
+        res.send(bills);
+    });
+});
+
 app.post('/addbill', (req, res) => {
     controller_bill.addBill(req.body, callback => {
         res.send(callback);
