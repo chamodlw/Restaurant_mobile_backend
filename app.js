@@ -44,6 +44,12 @@ app.get('/billundermaxid', (req, res) => {
     });
 });
 
+app.get('/bills/:year', (req, res) => {
+    controller_bill.getBillsByYear(req.params, bills => {
+        res.send(bills);
+    });
+});
+
 app.get('/bills/:year/:month', (req, res) => {
     controller_bill.getBillsByMonth(req.params, bills => {
         res.send(bills);

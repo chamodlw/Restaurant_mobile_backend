@@ -24,6 +24,30 @@ const getBillUnderMaxId = (req, res, next) => {
         });
 };
 
+const getBillsByYear = (req, res, next) => {
+    const { year } = req.params; // Get year  from the request parameters
+
+    // Create a date range for the month of the given year
+    const startDate = new Date(`${year}-01-01`);
+    const endDate = new Date(startDate);   
+    endDate.setFullYear(startDate.getFullYear() + 1); // Move to the first day of the next year
+
+    // Find bills where the date_time falls within the specified year
+    Bill.find({
+        'date_time': {
+            $gte: startDate,
+            $lt: endDate
+        }
+    })
+        .then(response => {
+            res.json({ response });
+        })
+        .catch(error => {
+            res.json({ message: error });
+        });
+    
+};
+
 const getBillsByMonth = (req, res, next) => {
     const { year, month } = req.params; // Get year and month from the request parameters
 
@@ -76,10 +100,12 @@ const getBillsByDate = (req, res, next) => {
 const addBill = (req, res, next) => {
     const newBill = new Bill({
         id: req.body.id,
+        date_time: req.body.date_time,
         items: req.body.items.map(item => ({
             id: item.id,
             name: item.name,
-            price: item.price
+            price: item.price,
+            quantity: item.quantity
         })),
         total: req.body.total
     });
@@ -117,6 +143,7 @@ const deleteBill = (req, res, next) => {
 
 exports.getBills = getBills;
 exports.getBillUnderMaxId = getBillUnderMaxId;
+exports.getBillsByYear = getBillsByYear;
 exports.getBillsByMonth = getBillsByMonth;
 exports.getBillsByDate = getBillsByDate;
 exports.addBill = addBill;

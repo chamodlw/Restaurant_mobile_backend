@@ -4,10 +4,12 @@ const Schema = mongoose.Schema;
 
 const billSchema = new Schema({
     id: Number,
+    date_time: Date,
     items: [{
         id: Number,
         name: String,
         price: Number,
+        quantity: Number,
     }],
     total: Number,
 });
